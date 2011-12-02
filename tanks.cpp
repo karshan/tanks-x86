@@ -1,5 +1,7 @@
 #include <iostream>
 #include <math.h>
+#include <cstdlib>
+#include <ctime>
 
 #include <GL/glew.h>
 #include <GL/glut.h>
@@ -7,16 +9,16 @@
 #include "libk3d/k3d.h"
 #include "libtanks/TankGameModel.h"
 #include "libtanks/TankGameView.h"
-//#include "libtanks/TankGameController.h"
+#include "libtanks/KeyboardController.h"
 
 using k3d::gl;
 
 const int FPS = 30; // How often the screen is updated (Frames Per Second)
 const int GAMERATE = 60;
 
-TankGameModel game;             // Game State
-TankGameView view(&game);       // Renderer
-//TankGameController controller;  // Interface to interact with game and view
+TankGameModel game;                             // Game State
+TankGameView view(&game);                       // Renderer
+KeyboardController controller(&game, &view);    // Interface to interact with game and view
 
 void init()
 {
@@ -24,6 +26,8 @@ void init()
         std::cout << "k3d::gl::initialize() failed\n";
         exit(1);
     }
+
+    srand(time(NULL));
 
     if (game.loadLevel("levels/simple.lvl") == false) {
         std::cout << "game.loadLevel() failed\n";
@@ -51,10 +55,14 @@ void keyboard(unsigned char key, int x, int y)
     if (key == 27) { // ESC
         exit(EXIT_SUCCESS);
     }
+    else {
+        controller.keydown(key);
+    }
 }
 
 void keyboard_up(unsigned char key, int x, int y)
 {
+    controller.keyup(key);
 }
 
 void display_timer(int v)
@@ -65,7 +73,7 @@ void display_timer(int v)
 
 void game_timer(int v)
 {
-//TODO    game.step();
+    game.step();
     glutTimerFunc(1000/v, game_timer, v);
 }
 
