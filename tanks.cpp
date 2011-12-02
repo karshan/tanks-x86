@@ -36,6 +36,7 @@ void init()
 
     if (view.loadModels("models/floor.obj",
                     "models/wall.obj",
+                    "models/missile.obj",
                     "models/tank_head.obj",
                     "models/tank_treads.obj") == false) {
         std::cout << "view.loadModels() failed\n";
