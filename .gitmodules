@@ -1,6 +1,6 @@
 [submodule "libtanks"]
 	path = libtanks
-	url = git@india.game-host.org:libtanks.git
+	url = https://github.com/karshan/libtanks.git
 [submodule "libk3d"]
 	path = libk3d
-	url = git@india.game-host.org:libk3d.git
+	url = https://github.com/karshan/libk3d.git
